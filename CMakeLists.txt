@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 2.8.4)
+project(VTree)
+
+SET(CMAKE_CXX_STANDARD 14)
+SET(METIS_INC_DIR metis-5.1.0/include)
+SET(METIS_LINK_DIR metis-5.1.0/libmetis)
+SET(CMAKE_CXX_FLAGS "-std=c++0x")
+include_directories(compator/road)
+include_directories(compator/GTree)
+include_directories(compator/silc)
+include_directories(${METIS_INC_DIR})
+link_directories(${METIS_LINK_DIR})
+link_libraries(metis)
+
+add_executable(vtree_build vtree_build.cpp)
+add_executable(vtree_knn_demo vtree_knn_demo.cpp)
