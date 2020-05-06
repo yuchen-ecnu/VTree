@@ -233,7 +233,7 @@ struct Graph//Struct of the graph
     vector<int> con;// Whether is connected
     //Partition the graph to two parts, and stores to G1, G2,2 METIS algorithm,npart is the number of parts
     // 将图`G`划分为`nparts`,并返回存储了每个点对应的分区color
-    vector<int> Split(Graph *G[], int nparts) {
+    vector<int> Split(Graph *G[], idx_t nparts) {
         vector<int> color(n);
         int i;
 
@@ -261,11 +261,11 @@ struct Graph//Struct of the graph
             idx_t nvtxs = n;
             idx_t ncon = 1;
             //transform
-            int *xadj = new idx_t[n + 1];
-            int *adj = new idx_t[n + 1];
-            int *adjncy = new idx_t[tot - 1];
-            int *adjwgt = new idx_t[tot - 1];
-            int *part = new idx_t[n];
+            auto *xadj = new idx_t[n + 1];
+            auto *adj = new idx_t[n + 1];
+            auto *adjncy = new idx_t[tot - 1];
+            auto *adjwgt = new idx_t[tot - 1];
+            auto *part = new idx_t[n];
 
             int xadj_pos = 1;
             int xadj_accum = 0;
@@ -294,7 +294,7 @@ struct Graph//Struct of the graph
             }
 
             // nparts
-            int objval = 0;
+            idx_t objval = 0;
             //METIS
             METIS_PartGraphKway(
                     &nvtxs,
@@ -618,6 +618,10 @@ struct Vehicle {
         this->distance.push_back(distance);
         this->buffer_dist.push_back(0);
     }
+};
+
+struct Request{
+    int id,s,t,w,n,d;//id,start,
 };
 
 struct V_Tree {
@@ -1339,8 +1343,8 @@ int main(int argc, char *argv[]) {
     tree.build();
     tree.build_waypoints(10000);
     save_binary(argv[2]); //save index tree
-    for (int i = 0; i < tree.vehicles.size(); ++i) {
-        delete tree.vehicles[i];
+    for (auto & vehicle : tree.vehicles) {
+        delete vehicle;
     }
     printf("Build and Save Finished\n");
 
